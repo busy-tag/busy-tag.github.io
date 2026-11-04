@@ -101,6 +101,7 @@ const config: Config = {
           items: [
             {label: 'Plugin user guides', to: '/plugins'},
             {label: 'Developer guides', to: '/developers'},
+            {label: 'Hardware & firmware', to: '/hardware'},
           ],
         },
         {

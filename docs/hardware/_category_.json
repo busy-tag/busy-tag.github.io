@@ -1,0 +1,10 @@
+{
+  "label": "Hardware & firmware",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "slug": "/hardware",
+    "title": "Hardware & firmware",
+    "description": "Control a Busy Tag device directly: the USB serial AT command set."
+  }
+}

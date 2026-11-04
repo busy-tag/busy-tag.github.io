@@ -8,7 +8,8 @@ description: User guides and developer documentation for the Busy Tag status dis
 
 Busy Tag is a status display with a 240 × 280 colour screen and an RGB LED. You manage it from
 the **Busy Tag app** on Windows, macOS, Android and iOS. This site has guides for using the
-app's plugins and documentation for developers who build their own.
+app's plugins, documentation for developers who build their own, and the device's command
+reference.
 
 ## Plugin user guides
 
@@ -24,6 +25,13 @@ the plugin, what it shows on your Busy Tag, and how to fix common problems.
   packaging.
 - [Busy Tag Design format](/developers/design-format): the `.busytagdesign` file format used to
   share designs.
+
+## Hardware & firmware
+
+- [AT Command Manual (firmware 3.x)](/hardware/at-commands): every USB serial command of the
+  Wi-Fi Busy Tag: LEDs, display, files, Wi-Fi, cloud and the local HTTP server.
+- [AT Command Manual (firmware 2.x)](/hardware/at-commands-v2): the command set of Busy Tag
+  devices without Wi-Fi.
 
 ## Source code
 

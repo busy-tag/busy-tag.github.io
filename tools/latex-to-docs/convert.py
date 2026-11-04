@@ -1,6 +1,9 @@
 """Convert Busy Tag LaTeX docs into Docusaurus Markdown + SVG figures.
 
-Usage: python convert.py <docs_src_dir> <site_dir> [--only NAME] [--no-figs] [--include-dev]
+Usage: python convert.py <docs_src_dir> <site_dir> [--hw FIRMWARE_DOCS_DIR] [--only NAME] [--no-figs] [--include-dev]
+
+--hw points at the docs/ folder of the firmware repo (busytag-wifi-version); its manuals listed in
+HW_DOCS are published under /hardware.
 
 Plugin guides are published only for plugins that regular users can see. A plugin whose
 manifest.json (BusyTag/Resources/Raw/DefaultPlugins/<Name>/manifest.json in the app repo) has
@@ -14,6 +17,7 @@ SITE = sys.argv[2]
 ONLY = sys.argv[sys.argv.index('--only') + 1] if '--only' in sys.argv else None
 NOFIGS = '--no-figs' in sys.argv
 INCLUDE_DEV = '--include-dev' in sys.argv
+HW_SRC = sys.argv[sys.argv.index('--hw') + 1] if '--hw' in sys.argv else None
 PLUGINS_DIR = os.path.join(SRC, '..', 'BusyTag', 'Resources', 'Raw', 'DefaultPlugins')
 import pypandoc
 
@@ -21,6 +25,18 @@ DEV_DESCRIPTIONS = {
     'PluginDevelopment': 'Build your own Busy Tag plugin with HTML, CSS and JavaScript: lifecycle, API, screen limits and packaging.',
     'DesignFormat': 'The .busytagdesign file format used to share and import Busy Tag designs.',
 }
+
+# Firmware repo manuals: file stem -> (job name, slug, sidebar position, title, description).
+# Only manuals for RELEASED firmware: the current 3.x manual plus the 2.x manual for USB-only
+# devices. Not yet published: at_command_manual_3.1 and local_network_guide (both describe the
+# unreleased firmware 3.1); user_manual.tex is superseded by the AT manuals.
+HW_DOCS = {
+    'at_command_manual_3.0': ('AtCommands', 'at-commands', 1, 'AT Command Manual (firmware 3.x)',
+                              'USB serial AT command reference for Wi-Fi Busy Tag devices (firmware 3.0, hardware 2.0).'),
+    'at_command_manual_2.0': ('AtCommandsV2', 'at-commands-v2', 2, 'AT Command Manual (firmware 2.x)',
+                              'USB serial AT command reference for Busy Tag devices without Wi-Fi (firmware 2.x).'),
+}
+HW_BY_NAME = {v[0]: v for v in HW_DOCS.values()}
 
 SLUG_OVERRIDES = {'YouTubeSubscribers': 'youtube-subscribers', 'YouTubeVideoStats': 'youtube-video-stats',
                   'JetBrainsAiUsage': 'jetbrains-ai-usage'}
@@ -31,6 +47,7 @@ def kebab(name):
 
 
 def slug_for(name):
+    if name in HW_BY_NAME: return HW_BY_NAME[name][1]
     return SLUG_OVERRIDES.get(name, kebab(name))
 
 
@@ -63,6 +80,9 @@ for f in sorted(glob.glob(os.path.join(SRC, 'plugin-user-guides', '*_UserGuide.t
     JOBS.append((f, 'plugins', name, 'plugin', None))
 JOBS.append((os.path.join(SRC, 'busytagplugin', 'BusyTag_Plugin_Development_Guide.tex'), 'developers', 'PluginDevelopment', 'dev', 1))
 JOBS.append((os.path.join(SRC, 'busytagdesign', 'BusyTagDesign_Format.tex'), 'developers', 'DesignFormat', 'dev', 2))
+if HW_SRC:
+    for stem, (name, slug, pos, _, _) in HW_DOCS.items():
+        JOBS.append((os.path.join(HW_SRC, stem + '.tex'), 'hardware', name, 'hw', pos))
 
 DRAW_RE = re.compile(r'\\begin\{(tikzpicture|scope)\}|\\(node|draw|fill|filldraw|path|shade|shadedraw|clip|tikz|pic)\b')
 FONT_RE = re.compile(r'\\(fontsize|selectfont|fontfamily|fontseries|fontshape|usefont)\b')
@@ -272,6 +292,7 @@ def convert(job):
     title = re.sub(r'^Busy Tag\s+', '', title)
     title = re.sub(r'\s+[-–—]+\s+User Guide$', '', title).strip()
     title = title.replace('--', '–')
+    if kind == 'hw': title = HW_BY_NAME[name][3]
     first_sec = re.search(r'\\section\*?\{', body)
     front = body[:first_sec.start()]
     body = body[first_sec.start():]
@@ -418,9 +439,9 @@ def convert(job):
         fm.append('slug: /plugins/%s' % slug)
     else:
         fm.append('sidebar_position: %d' % sidebar_pos)
-        fm.append('slug: /developers/%s' % slug)
+        fm.append('slug: /%s/%s' % (sect, slug))
     # Without a description Docusaurus uses the first paragraph (the PDF note) on index cards.
-    desc = desc or DEV_DESCRIPTIONS.get(name, '')
+    desc = desc or DEV_DESCRIPTIONS.get(name, '') or (HW_BY_NAME[name][4] if kind == 'hw' else '')
     if desc: fm.append('description: "%s"' % desc.replace('"', '\\"'))
     fm.append('---')
     head = '\n'.join(fm) + '\n\n'
