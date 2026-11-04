@@ -42,12 +42,12 @@ your Busy Tag, and how to fix common problems.
 ## Hardware & firmware
 
 - [Specifications](/hardware/specs): size, screen, LEDs, connectivity and models.
-- [AT Command Manual (firmware 3.x)](/hardware/at-commands): every USB serial command of the
-  Wi-Fi Busy Tag: LEDs, display, files, Wi-Fi, cloud and the local HTTP server.
+- [AT Command Manual (firmware 3.x)](/hardware/at-commands): every USB serial command of
+  Busy Tag 2: LEDs, display, files, Wi-Fi, cloud and the local HTTP server.
 - [Local Network Guide (firmware 3.x)](/hardware/local-network): control Busy Tag over Wi-Fi
   without the cloud, in access-point, station or STA+AP mode, through its HTTP API.
-- [AT Command Manual (firmware 2.x)](/hardware/at-commands-v2): the command set of Busy Tag
-  devices without Wi-Fi.
+- [AT Command Manual (firmware 2.x)](/hardware/at-commands-v2): the command set of the original Busy
+  Tag (no Wi-Fi).
 
 ## About
 

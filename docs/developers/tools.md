@@ -72,5 +72,5 @@ On macOS the port looks like `/dev/cu.usbmodem…`; `busytag-cli scan` prints it
 
 Open the serial port and send AT commands terminated with `\r\n`. The
 [AT Command Manual](/hardware/at-commands#programming-example) has complete Python, C# and Swift
-examples. Wi-Fi models can also be controlled over HTTP on the local network; see the
+examples. Busy Tag 2 can also be controlled over HTTP on the local network; see the
 [Local Network Guide](/hardware/local-network).

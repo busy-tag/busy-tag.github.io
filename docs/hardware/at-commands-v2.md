@@ -2,7 +2,7 @@
 title: "AT Command Manual (firmware 2.x)"
 sidebar_position: 3
 slug: /hardware/at-commands-v2
-description: "USB serial AT command reference for Busy Tag devices without Wi-Fi (firmware 2.x)."
+description: "USB serial AT command reference for the original Busy Tag (hardware 1.0, firmware 2.x, no Wi-Fi)."
 ---
 
 :::info[PDF version]

@@ -19,7 +19,7 @@ description: Solutions for common Busy Tag problems and answers to frequent ques
 
 ### The phone app cannot set up the device
 
-- The phone setup needs a Busy Tag with Wi-Fi (firmware 3.0 or later). Older models are
+- The phone setup needs a Busy Tag 2 (Wi-Fi, firmware 3.x). The original Busy Tag is
   controlled from the desktop app over USB.
 - Make sure the device shows the setup QR code. If it was set up before, it does not; hold the
   reset button for **3 seconds** to factory reset it and the QR code returns.
@@ -39,7 +39,7 @@ description: Solutions for common Busy Tag problems and answers to frequent ques
 
 ### A shared device does not respond
 
-A device with firmware older than 3.0 has no Wi-Fi. Other people can control it only while it is
+The original Busy Tag has no Wi-Fi. Other people can control it only while it is
 plugged into a computer that is running the Busy Tag app.
 
 ## Display and designs

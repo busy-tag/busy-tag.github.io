@@ -10,7 +10,7 @@ USB hub or a power bank. How the app talks to it depends on where you run the ap
 | You use the app on | Connection | Works with |
 |:--|:--|:--|
 | Windows or macOS | **USB** cable to the computer | Every Busy Tag |
-| Android or iOS | **Wi-Fi**, through the Busy Tag cloud | Wi-Fi models (firmware 3.0 or later) |
+| Android or iOS | **Wi-Fi**, through the Busy Tag cloud | Busy Tag 2 |
 
 :::tip[Use a data cable]
 Some USB-C cables only carry power. With such a cable the device lights up but the app never
@@ -78,7 +78,7 @@ The owner of a device can let other people control it from their own app:
    code (phone) or paste the link (computer).
 
 :::info
-A device with firmware older than 3.0 has no Wi-Fi. It can still be shared, but only while it is
+The original Busy Tag (firmware 2.x) has no Wi-Fi. It can still be shared, but only while it is
 plugged into a computer that is running the Busy Tag app.
 :::
 

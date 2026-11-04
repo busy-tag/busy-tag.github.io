@@ -2,7 +2,7 @@
 title: "AT Command Manual (firmware 3.x)"
 sidebar_position: 1
 slug: /hardware/at-commands
-description: "USB serial AT command reference for Wi-Fi Busy Tag devices (firmware 3.0, hardware 2.0)."
+description: "USB serial AT command reference for Busy Tag 2 (hardware 2.0, firmware 3.0, Wi-Fi)."
 ---
 
 :::info[PDF version]
