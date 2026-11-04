@@ -5,6 +5,6 @@
     "type": "generated-index",
     "slug": "/hardware",
     "title": "Hardware & firmware",
-    "description": "Control a Busy Tag device directly: the USB serial AT command set."
+    "description": "Control a Busy Tag device directly: the USB serial AT command set and the local network HTTP API."
   }
 }

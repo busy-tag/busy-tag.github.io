@@ -28,12 +28,15 @@ DEV_DESCRIPTIONS = {
 
 # Firmware repo manuals: file stem -> (job name, slug, sidebar position, title, description).
 # Only manuals for RELEASED firmware: the current 3.x manual plus the 2.x manual for USB-only
-# devices. Not yet published: at_command_manual_3.1 and local_network_guide (both describe the
-# unreleased firmware 3.1); user_manual.tex is superseded by the AT manuals.
+# devices, and the local network guide for 3.0. Not yet published: at_command_manual_3.1 and
+# local_network_guide (both describe the unreleased firmware 3.1; when 3.1 ships, point the
+# AtCommands and LocalNetwork entries at them); user_manual.tex is superseded by the AT manuals.
 HW_DOCS = {
     'at_command_manual_3.0': ('AtCommands', 'at-commands', 1, 'AT Command Manual (firmware 3.x)',
                               'USB serial AT command reference for Wi-Fi Busy Tag devices (firmware 3.0, hardware 2.0).'),
-    'at_command_manual_2.0': ('AtCommandsV2', 'at-commands-v2', 2, 'AT Command Manual (firmware 2.x)',
+    'local_network_guide_3.0': ('LocalNetwork', 'local-network', 2, 'Local Network Guide',
+                                'Control Busy Tag over the local network without the cloud: access point, station and STA+AP modes and the built-in HTTP API (firmware 3.0).'),
+    'at_command_manual_2.0': ('AtCommandsV2', 'at-commands-v2', 3, 'AT Command Manual (firmware 2.x)',
                               'USB serial AT command reference for Busy Tag devices without Wi-Fi (firmware 2.x).'),
 }
 HW_BY_NAME = {v[0]: v for v in HW_DOCS.values()}
@@ -337,8 +340,9 @@ def convert(job):
 
     # ---- admonitions
     def admon(mm):
-        env = mm.group(1)
-        return '\n\nADMONOPEN-%s\n\n' % ADMON_ENVS[env]
+        # A box title ([Title]) is carried hex-encoded so pandoc leaves it alone.
+        env = mm.group(1); t = plain(mm.group(2)[1:-1]) if mm.group(2) else ''
+        return '\n\nADMONOPEN-%s%s\n\n' % (ADMON_ENVS[env], '-' + t.encode('utf-8').hex() if t else '')
     body = re.sub(r'\\begin\{(%s)\}(\[[^\]]*\])?' % '|'.join(ADMON_ENVS), admon, body)
     body = re.sub(r'\\end\{(%s)\}' % '|'.join(ADMON_ENVS), '\n\nADMONCLOSE\n\n', body)
     # codewin env (dev guide) -> lstlisting
@@ -402,10 +406,11 @@ def convert(job):
     md = re.sub(r'FIGPLACEHOLDER(\d+)', fig, md)
     out = []; mode = None; buf = []
     for line in md.split('\n'):
-        mo = re.match(r'^ADMONOPEN-(\w+)\s*$', line.strip()) if line.strip().startswith('ADMONOPEN') else None
+        mo = re.match(r'^ADMONOPEN-([A-Za-z]+)(?:-([0-9a-f]+))?\s*$', line.strip()) if line.strip().startswith('ADMONOPEN') else None
         if mo:
             mode = mo.group(1)
-            if mode != 'CMD': out.append(':::%s' % mode)
+            ttl = '[%s]' % bytes.fromhex(mo.group(2)).decode('utf-8') if mo.group(2) else ''
+            if mode != 'CMD': out.append(':::%s%s' % (mode, ttl))
             else: buf = []
             continue
         if line.strip() == 'ADMONCLOSE':
@@ -423,7 +428,7 @@ def convert(job):
         else: out.append(line)
     md = '\n'.join(out)
     md = re.sub(r'[ \t]+\n', '\n', md)
-    md = re.sub(r'(:::\w+)\n\n', r'\1\n', md)
+    md = re.sub(r'(:::\w+(?:\[[^\]\n]*\])?)\n\n', r'\1\n', md)
     md = re.sub(r'\n{3,}', '\n\n', md)
     md = re.sub(r'\n\n:::\n', '\n:::\n', md).strip() + '\n'
     # tighten simple lists (pandoc emits loose lists for LaTeX items)
