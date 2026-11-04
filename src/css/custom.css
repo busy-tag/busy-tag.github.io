@@ -1,0 +1,42 @@
+/**
+ * Busy Tag brand colours for the Infima theme.
+ * Light mode uses the Busy Tag purple (#5B208F); dark mode a lighter tint for contrast.
+ */
+:root {
+  --ifm-color-primary: #5b208f;
+  --ifm-color-primary-dark: #521d81;
+  --ifm-color-primary-darker: #4d1b7a;
+  --ifm-color-primary-darkest: #401664;
+  --ifm-color-primary-light: #64239d;
+  --ifm-color-primary-lighter: #6925a4;
+  --ifm-color-primary-lightest: #762abb;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #b98ae6;
+  --ifm-color-primary-dark: #a96fe0;
+  --ifm-color-primary-darker: #a162dd;
+  --ifm-color-primary-darkest: #8a3fd3;
+  --ifm-color-primary-light: #c9a5ec;
+  --ifm-color-primary-lighter: #d1b2ef;
+  --ifm-color-primary-lightest: #e8d9f7;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* Screen illustrations are rendered from the LaTeX guides with dark captions,
+   so give them a light card in both themes. */
+.markdown img[src*='-fig-'] {
+  display: block;
+  margin: 1.25rem auto;
+  max-width: 100%;
+  height: auto;
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+[data-theme='dark'] .markdown img[src*='-fig-'] {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+}

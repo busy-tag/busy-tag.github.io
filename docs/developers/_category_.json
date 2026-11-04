@@ -1,0 +1,10 @@
+{
+  "label": "Developer guides",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "slug": "/developers",
+    "title": "Developer guides",
+    "description": "Build your own Busy Tag plugins and work with Busy Tag design files."
+  }
+}

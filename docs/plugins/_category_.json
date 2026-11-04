@@ -1,0 +1,10 @@
+{
+  "label": "Plugin user guides",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "slug": "/plugins",
+    "title": "Plugin user guides",
+    "description": "Guides for the plugins built into the Busy Tag app. Find them under Integrations in the app."
+  }
+}
