@@ -1,0 +1,10 @@
+{
+  "label": "Updates & release notes",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "slug": "/updates",
+    "title": "Updates & release notes",
+    "description": "Keep the Busy Tag app and the device firmware up to date, and see what changed."
+  }
+}

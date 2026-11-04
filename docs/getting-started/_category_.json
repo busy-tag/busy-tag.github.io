@@ -1,0 +1,10 @@
+{
+  "label": "Getting started",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "slug": "/getting-started",
+    "title": "Getting started",
+    "description": "Install the Busy Tag app, connect your device and learn your way around the app."
+  }
+}

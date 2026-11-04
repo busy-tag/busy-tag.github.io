@@ -99,9 +99,14 @@ const config: Config = {
         {
           title: 'Docs',
           items: [
+            {label: 'Getting started', to: '/getting-started'},
             {label: 'Plugin user guides', to: '/plugins'},
+            {label: 'Troubleshooting & FAQ', to: '/troubleshooting'},
+            {label: 'Updates & release notes', to: '/updates'},
             {label: 'Developer guides', to: '/developers'},
             {label: 'Hardware & firmware', to: '/hardware'},
+            {label: 'Accessibility', to: '/about/accessibility'},
+            {label: 'Privacy & legal', to: '/about/legal'},
           ],
         },
         {
