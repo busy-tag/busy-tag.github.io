@@ -29,7 +29,7 @@ busytag.com. Both have the same features. The differences:
 ## Older versions
 
 Installers of earlier Windows and macOS versions are kept in the
-[download archive](https://greynut.com/BusyTagApp/). See the
+[download archive](/updates/downloads). See the
 [release notes](/updates/app-release-notes) for what changed.
 
 ## Languages

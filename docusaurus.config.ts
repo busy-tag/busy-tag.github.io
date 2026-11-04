@@ -103,6 +103,7 @@ const config: Config = {
             {label: 'Plugin user guides', to: '/plugins'},
             {label: 'Troubleshooting & FAQ', to: '/troubleshooting'},
             {label: 'Updates & release notes', to: '/updates'},
+            {label: 'Download archive', to: '/updates/downloads'},
             {label: 'Developer guides', to: '/developers'},
             {label: 'Hardware & firmware', to: '/hardware'},
             {label: 'Accessibility', to: '/about/accessibility'},

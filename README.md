@@ -21,6 +21,8 @@ docs/
   getting-started/          Install, connect, app tour        (hand-written)
   troubleshooting.md        Troubleshooting & FAQ             (hand-written)
   updates/                  Firmware updates, app release notes (hand-written)
+                            downloads.mdx renders src/data/app-archive.json; after a release run
+                            python tools/app-archive.py --latest <version>  (only released versions)
   about/                    Accessibility, privacy & legal    (hand-written)
                             vpat.md generated: python tools/vpat-to-docs.py <app>/docs/vpat .
   plugins/                  Plugin user guides  -> /plugins/<name>
