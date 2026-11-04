@@ -1,5 +1,5 @@
 ---
-title: "Local Network Guide"
+title: "Local Network Guide (firmware 3.x)"
 sidebar_position: 2
 slug: /hardware/local-network
 description: "Control Busy Tag over the local network without the cloud: access point, station and STA+AP modes and the built-in HTTP API (firmware 3.0)."

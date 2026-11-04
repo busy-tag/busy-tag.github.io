@@ -34,7 +34,7 @@ DEV_DESCRIPTIONS = {
 HW_DOCS = {
     'at_command_manual_3.0': ('AtCommands', 'at-commands', 1, 'AT Command Manual (firmware 3.x)',
                               'USB serial AT command reference for Wi-Fi Busy Tag devices (firmware 3.0, hardware 2.0).'),
-    'local_network_guide_3.0': ('LocalNetwork', 'local-network', 2, 'Local Network Guide',
+    'local_network_guide_3.0': ('LocalNetwork', 'local-network', 2, 'Local Network Guide (firmware 3.x)',
                                 'Control Busy Tag over the local network without the cloud: access point, station and STA+AP modes and the built-in HTTP API (firmware 3.0).'),
     'at_command_manual_2.0': ('AtCommandsV2', 'at-commands-v2', 3, 'AT Command Manual (firmware 2.x)',
                               'USB serial AT command reference for Busy Tag devices without Wi-Fi (firmware 2.x).'),
