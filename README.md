@@ -22,6 +22,7 @@ docs/
   troubleshooting.md        Troubleshooting & FAQ             (hand-written)
   updates/                  Firmware updates, app release notes (hand-written)
   about/                    Accessibility, privacy & legal    (hand-written)
+                            vpat.md generated: python tools/vpat-to-docs.py <app>/docs/vpat .
   plugins/                  Plugin user guides  -> /plugins/<name>
   developers/               Developer guides (generated) + tools.md, examples.md (hand-written)
   hardware/                 Specs (hand-written), AT command manuals, local network guide

@@ -1,6 +1,6 @@
 ---
 title: Privacy & legal
-sidebar_position: 2
+sidebar_position: 3
 description: Privacy policy, terms, returns and data handling for Busy Tag.
 ---
 

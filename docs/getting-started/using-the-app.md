@@ -66,8 +66,6 @@ A Pomodoro timer that counts down on Busy Tag, so people around you see that you
    work sessions the long break comes.
 3. Tap **Start**. **Reset** starts over.
 
-You can save your favourite settings as presets.
-
 ![Focus session](./img/app-focus.webp)
 
 :::note[Phones and tablets]
@@ -89,7 +87,7 @@ stock prices, AI-usage meters and more. Each one has its own
 - **My Integrations** lists the ones you added. **▶** shows one on the device now.
 - **Start Playlist** rotates through your integrations. Set how long each one stays on screen
   (15 s – 5 min) and **Include in playlist** / **Exclude from playlist** in its **⋯** menu, where
-  you also find **Configure**, **Rename**, the icon colour, the order and **Delete**.
+  you also find **Configure**, the icon colour, the order and **Delete**.
 
 On phones and tablets integrations update only while the app is open and in the foreground.
 
@@ -100,8 +98,6 @@ On phones and tablets integrations update only while the app is open and in the 
 - **Device settings:** tap a device to rename it, set screen and LED brightness, see and delete
   files on the device, configure Wi-Fi, share the device and update its firmware (see
   [Firmware updates](/updates/firmware)).
-- **Status overlay** (firmware 3.0 or later): on-screen messages and an optional top toolbar
-  with Wi-Fi signal, temperature and clock.
 - **Advanced settings:** restart the device or format its storage.
 - **Add device:** set up a new device or add a shared one ([Connect](/getting-started/connect)).
 - **Startup behavior** (Windows and macOS): start the app when you log in.
@@ -110,7 +106,7 @@ On phones and tablets integrations update only while the app is open and in the 
 
 ## Help and Learning center
 
-**Help** opens the FAQ from busytag.com and links to this documentation. **Learning center**
+**Help** opens the FAQ from busytag.com. **Learning center**
 opens the tutorials on busytag.com.
 
 ![Help](./img/app-help.webp)

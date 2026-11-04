@@ -6,7 +6,7 @@ description: How accessible the Busy Tag app is, which assistive features it sup
 
 We want everyone to be able to use Busy Tag. This statement describes the accessibility of the
 **Busy Tag app** on Windows, macOS, Android and iOS. It is based on our accessibility
-conformance report (VPAT® 2.5) for app version 1.6.5.
+conformance report ([VPAT® 2.5](/about/vpat)) for app version 1.7.4, November 2026.
 
 ## Conformance
 
@@ -22,7 +22,8 @@ conformance report (VPAT® 2.5) for app version 1.6.5.
 ## What the app supports
 
 - **Screen readers.** Buttons, images and controls on all pages and dialogs have accessible
-  names, and decorative images are hidden from assistive technology. Connection changes and
+  names, with a few exceptions listed below, and decorative images are hidden from assistive
+  technology. Connection changes and
   progress messages are announced.
 - **Headings.** Page titles, section headers and dialog titles are marked as headings.
 - **Colour.** The LED colour presets have text labels, so colour is not the only way to tell
@@ -36,6 +37,9 @@ conformance report (VPAT® 2.5) for app version 1.6.5.
 
 ## Known limitations
 
+- A few controls have **no accessible name**: the drop-down arrows of pickers, the
+  password-visibility button in Wi-Fi settings, some toggles in the device's status-overlay
+  settings and two check boxes.
 - **Keyboard navigation** relies on platform defaults; the focus order is not always the visual
   order and focus indicators can be faint.
 - Some **secondary text and icons** do not reach the recommended contrast ratios.
@@ -51,7 +55,11 @@ We are working on these points in upcoming releases.
 This statement covers the app. The device itself is a visual status display; its information is
 always also available in the app.
 
-## Feedback and full report
+## Full report and feedback
 
-If something in the app is hard to use for you, or you need the full conformance report (VPAT),
-contact us at [hello@busytag.com](mailto:hello@busytag.com).
+The full [Accessibility Conformance Report (VPAT)](/about/vpat) lists every WCAG 2.1,
+Section 508 and EN 301 549 criterion; it is also available as a
+[PDF](pathname:///pdf/BusyTag_VPAT.pdf).
+
+If something in the app is hard to use for you, contact us at
+[hello@busytag.com](mailto:hello@busytag.com).

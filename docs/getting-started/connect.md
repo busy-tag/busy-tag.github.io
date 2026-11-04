@@ -77,9 +77,6 @@ The owner of a device can let other people control it from their own app:
 2. **Other person:** in Settings → **Add device** choose **Add Shared Device**, then scan the QR
    code (phone) or paste the link (computer).
 
-The owner can see and remove people under **Manage access**. Someone who no longer needs the
-device can remove it with **Leave shared device**.
-
 :::info
 A device with firmware older than 3.0 has no Wi-Fi. It can still be shared, but only while it is
 plugged into a computer that is running the Busy Tag app.

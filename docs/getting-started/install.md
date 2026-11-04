@@ -26,6 +26,12 @@ busytag.com. Both have the same features. The differences:
   firmware update gives you trouble, install the direct version from
   [busytag.com/software](https://www.busytag.com/software).
 
+## Older versions
+
+Installers of earlier Windows and macOS versions are kept in the
+[download archive](https://greynut.com/BusyTagApp/). See the
+[release notes](/updates/app-release-notes) for what changed.
+
 ## Languages
 
 The app is available in English, Latvian, German, Spanish, French, Japanese, Russian, Ukrainian,
