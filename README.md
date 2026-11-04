@@ -48,8 +48,8 @@ Requirements: Python 3.10+, a TeX distribution (MiKTeX/TeX Live) with the packag
 ```bash
 python -m venv .venv
 .venv/Scripts/pip install -r tools/latex-to-docs/requirements.txt   # bin/ on macOS/Linux
-.venv/Scripts/python tools/latex-to-docs/convert.py ../busytag-maui-app/docs .
-.venv/Scripts/python tools/latex-to-docs/convert.py ../busytag-maui-app/docs . --only AnalogClock
+.venv/Scripts/python tools/latex-to-docs/convert.py ../../RiderProjects/busytag-maui-app/docs .
+.venv/Scripts/python tools/latex-to-docs/convert.py ../../RiderProjects/busytag-maui-app/docs . --only AnalogClock
 ```
 
 The converter overwrites the generated pages, so make lasting text changes in the `.tex` sources,
