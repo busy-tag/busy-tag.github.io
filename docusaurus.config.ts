@@ -110,6 +110,17 @@ const config: Config = {
             {label: 'GitHub', href: 'https://github.com/busy-tag'},
           ],
         },
+        {
+          title: 'Follow us',
+          items: [
+            {label: 'YouTube', href: 'https://www.youtube.com/@BusyTaghello'},
+            {label: 'Instagram', href: 'https://www.instagram.com/busytag'},
+            {label: 'TikTok', href: 'https://www.tiktok.com/@busytag'},
+            {label: 'Facebook', href: 'https://www.facebook.com/people/BusyTag/61555324800331/'},
+            {label: 'LinkedIn', href: 'https://www.linkedin.com/company/busytag/'},
+            {label: 'X', href: 'https://x.com/busytag'},
+          ],
+        },
       ],
       copyright: `Copyright © ${new Date().getFullYear()} SIA BUSY TAG`,
     },

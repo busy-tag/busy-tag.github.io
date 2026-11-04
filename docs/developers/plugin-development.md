@@ -2,6 +2,7 @@
 title: "Plugin Development Guide"
 sidebar_position: 1
 slug: /developers/plugin-development
+description: "Build your own Busy Tag plugin with HTML, CSS and JavaScript: lifecycle, API, screen limits and packaging."
 ---
 
 :::info[PDF version]

@@ -2,6 +2,7 @@
 title: "BusyTag Design (.busytagdesign) File Format"
 sidebar_position: 2
 slug: /developers/design-format
+description: "The .busytagdesign file format used to share and import Busy Tag designs."
 ---
 
 :::info[PDF version]

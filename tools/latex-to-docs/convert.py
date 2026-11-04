@@ -17,6 +17,11 @@ INCLUDE_DEV = '--include-dev' in sys.argv
 PLUGINS_DIR = os.path.join(SRC, '..', 'BusyTag', 'Resources', 'Raw', 'DefaultPlugins')
 import pypandoc
 
+DEV_DESCRIPTIONS = {
+    'PluginDevelopment': 'Build your own Busy Tag plugin with HTML, CSS and JavaScript: lifecycle, API, screen limits and packaging.',
+    'DesignFormat': 'The .busytagdesign file format used to share and import Busy Tag designs.',
+}
+
 SLUG_OVERRIDES = {'YouTubeSubscribers': 'youtube-subscribers', 'YouTubeVideoStats': 'youtube-video-stats',
                   'JetBrainsAiUsage': 'jetbrains-ai-usage'}
 
@@ -414,6 +419,8 @@ def convert(job):
     else:
         fm.append('sidebar_position: %d' % sidebar_pos)
         fm.append('slug: /developers/%s' % slug)
+    # Without a description Docusaurus uses the first paragraph (the PDF note) on index cards.
+    desc = desc or DEV_DESCRIPTIONS.get(name, '')
     if desc: fm.append('description: "%s"' % desc.replace('"', '\\"'))
     fm.append('---')
     head = '\n'.join(fm) + '\n\n'
