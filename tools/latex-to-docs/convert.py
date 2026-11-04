@@ -1,6 +1,11 @@
 """Convert Busy Tag LaTeX docs into Docusaurus Markdown + SVG figures.
 
-Usage: python convert.py <docs_src_dir> <site_dir> [--only NAME] [--no-figs]
+Usage: python convert.py <docs_src_dir> <site_dir> [--only NAME] [--no-figs] [--include-dev]
+
+Plugin guides are published only for plugins that regular users can see. A plugin whose
+manifest.json (BusyTag/Resources/Raw/DefaultPlugins/<Name>/manifest.json in the app repo) has
+"developerOnly": true is hidden in the app unless developer mode is on, so its guide is skipped
+and any previously generated page, figures and PDF are removed. --include-dev publishes them anyway.
 """
 import os, re, sys, shutil, subprocess, json, tempfile, glob
 
@@ -8,11 +13,48 @@ SRC = sys.argv[1]
 SITE = sys.argv[2]
 ONLY = sys.argv[sys.argv.index('--only') + 1] if '--only' in sys.argv else None
 NOFIGS = '--no-figs' in sys.argv
+INCLUDE_DEV = '--include-dev' in sys.argv
+PLUGINS_DIR = os.path.join(SRC, '..', 'BusyTag', 'Resources', 'Raw', 'DefaultPlugins')
 import pypandoc
+
+SLUG_OVERRIDES = {'YouTubeSubscribers': 'youtube-subscribers', 'YouTubeVideoStats': 'youtube-video-stats',
+                  'JetBrainsAiUsage': 'jetbrains-ai-usage'}
+
+
+def kebab(name):
+    return re.sub(r'(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])', '-', name).lower()
+
+
+def slug_for(name):
+    return SLUG_OVERRIDES.get(name, kebab(name))
+
+
+def is_developer_only(name):
+    path = os.path.join(PLUGINS_DIR, name, 'manifest.json')
+    if not os.path.exists(path):
+        sys.exit('No manifest for plugin %s at %s; cannot tell whether it is developer-only.' % (name, path))
+    return bool(json.load(open(path, encoding='utf-8-sig')).get('developerOnly', False))
+
+
+def remove_generated(tex, sect, name):
+    slug = slug_for(name)
+    removed = []
+    for p in [os.path.join(SITE, 'docs', sect, slug + '.md'),
+              os.path.join(SITE, 'static', 'pdf', os.path.basename(tex).replace('.tex', '.pdf'))] + \
+             glob.glob(os.path.join(SITE, 'docs', sect, 'img', slug + '-fig-*.svg')):
+        if os.path.exists(p):
+            os.remove(p); removed.append(p)
+    return removed
+
 
 JOBS = []  # (tex path, out dir rel to site/docs, slug, kind, sidebar_position)
 for f in sorted(glob.glob(os.path.join(SRC, 'plugin-user-guides', '*_UserGuide.tex'))):
     name = os.path.basename(f).replace('_UserGuide.tex', '')
+    if not INCLUDE_DEV and is_developer_only(name):
+        if not ONLY or ONLY == name:
+            gone = remove_generated(f, 'plugins', name)
+            print('%-22s skipped (developerOnly)%s' % (name, ', removed %d files' % len(gone) if gone else ''))
+        continue
     JOBS.append((f, 'plugins', name, 'plugin', None))
 JOBS.append((os.path.join(SRC, 'busytagplugin', 'BusyTag_Plugin_Development_Guide.tex'), 'developers', 'PluginDevelopment', 'dev', 1))
 JOBS.append((os.path.join(SRC, 'busytagdesign', 'BusyTagDesign_Format.tex'), 'developers', 'DesignFormat', 'dev', 2))
@@ -22,10 +64,6 @@ FONT_RE = re.compile(r'\\(fontsize|selectfont|fontfamily|fontseries|fontshape|us
 ADMON_ENVS = {'tipbox': 'tip', 'notebox': 'note', 'warnbox': 'warning', 'cmdbox': 'CMD'}
 RECURSE_ENVS = {'itemize', 'enumerate', 'description', 'tipbox', 'notebox', 'warnbox'}
 FIG_ENVS = {'center', 'figure', 'minipage', 'tikzpicture', 'flushleft', 'flushright'}
-
-
-def kebab(name):
-    return re.sub(r'(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])', '-', name).lower()
 
 
 def group(s, i):
@@ -221,8 +259,7 @@ def convert(job):
     defs = parse_defs(pre)
     draw = drawing_names(defs, pre)
     engine = 'xelatex' if 'fontspec' in pre else 'latex'
-    slug = {'YouTubeSubscribers': 'youtube-subscribers', 'YouTubeVideoStats': 'youtube-video-stats',
-            'JetBrainsAiUsage': 'jetbrains-ai-usage'}.get(name, kebab(name))
+    slug = slug_for(name)
 
     # ---- metadata
     m = re.search(r'pdftitle=\{([^}]*)\}', pre)
