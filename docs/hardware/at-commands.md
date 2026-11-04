@@ -235,8 +235,8 @@ The LCD backlight can dim automatically after a period of inactivity. Both setti
 
 | **Command** | **Description** |
 |:---|:---|
-| `AT+DD=<0|1>` | Enable/disable idle auto-dim |
-| `AT+DD?` | Get state: `+DD:<0|1>` |
+| `AT+DD=<0\|1>` | Enable/disable idle auto-dim |
+| `AT+DD?` | Get state: `+DD:<0\|1>` |
 | `AT+DDC=<timeout_s>,<dim_level>` | Configure: timeout `1`–`120` s, dim level `0`–`20` (PWM duty) |
 | `AT+DDC?` | Get config: `+DDC:<timeout_s>,<dim_level>` |
 
@@ -295,12 +295,12 @@ A configurable toolbar at the top of the display can show a Wi-Fi indicator, the
 
 | **Command** | **Description** |
 |:---|:---|
-| `AT+TB=<0|1>` | Show/hide the toolbar |
-| `AT+TB?` | Get toolbar state: `+TB:<0|1>` |
+| `AT+TB=<0\|1>` | Show/hide the toolbar |
+| `AT+TB?` | Get toolbar state: `+TB:<0\|1>` |
 | `AT+TBI=<id>,<enabled>,<side>` | Configure one item: `id` `0`=Wi-Fi, `1`=temperature, `2`=clock; `side` `0`=left, `1`=right |
 | `AT+TBI?` | Get item layout: `+TBI:<id>,<enabled>,<side>` per line |
-| `AT+TBR=<0|1>` | Show/hide the numeric RSSI value next to the Wi-Fi icon |
-| `AT+TBR?` | Get RSSI display state: `+TBR:<0|1>` |
+| `AT+TBR=<0\|1>` | Show/hide the numeric RSSI value next to the Wi-Fi icon |
+| `AT+TBR?` | Get RSSI display state: `+TBR:<0\|1>` |
 | `AT+BO=<0-100>` | Set bar opacity (applies to the toolbar scrim and the status bar) |
 | `AT+BO?` | Get bar opacity: `+BO:<0-100>` |
 
@@ -485,8 +485,8 @@ WebSocket states: `0`=disconnected, `1`=connecting, `2`=TLS handshake, `3`=authe
 |:---|:---|
 | `AT+DL=<url>,<filename>[,<size>]` | Download a file over HTTP(S) into storage. A `.bin` filename triggers an OTA firmware update. The optional `<size>` (bytes) enables percentage progress when the server sends no `Content-Length`. |
 | `AT+UL=<url>,<filename>` | Upload a stored file to the cloud via HTTPS POST. The device streams `/data/<filename>` and sends its SHA-256 for server-side verification. |
-| `AT+DPR=<0|1>` | Enable/disable transfer progress events |
-| `AT+DPR?` | Get progress reporting state: `+DPR:<0|1>` |
+| `AT+DPR=<0\|1>` | Enable/disable transfer progress events |
+| `AT+DPR?` | Get progress reporting state: `+DPR:<0\|1>` |
 
 Network transfer commands
 
@@ -523,7 +523,7 @@ The device runs a local HTTP server that exposes the AT command set over REST, u
 | **Command** | **Description** |
 |:---|:---|
 | `AT+LS=<enable>,<port>,<auth_token>` | Configure the server. Port `1024`–`65535`. A non-empty token enables authentication. |
-| `AT+LS?` | Get status: `+LS:<enabled>,<port>,<auth_required>,<RUNNING|STOPPED>` |
+| `AT+LS?` | Get status: `+LS:<enabled>,<port>,<auth_required>,<RUNNING\|STOPPED>` |
 | `AT+LT?` | Get the current auth token: `+LT:<token>` |
 | `AT+LT` | Regenerate the auth token: `+LT:<new_token>` |
 
@@ -765,7 +765,7 @@ The serial port name varies by operating system: on Windows it is a COM port (e.
 
 ### Python
 
-``` python
+```python
 import serial
 
 ser = serial.Serial('COM3', 460800, timeout=1)
@@ -791,7 +791,7 @@ ser.close()
 
 ### C#
 
-``` [Sharp]C
+```csharp
 using System;
 using System.IO.Ports;
 
@@ -823,7 +823,7 @@ port.Close();
 
 Uses the `ORSSerialPort` library (macOS). Replies are delivered to the port’s delegate; only the writes are shown here.
 
-``` swift
+```swift
 import ORSSerial
 
 let port = ORSSerialPort(path: "/dev/tty.usbmodem1101")!

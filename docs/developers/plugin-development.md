@@ -44,7 +44,7 @@ The three required files must be at the root of the plugin folder (and of the ZI
 
 The app ships two shared files in the parent `Plugins` folder. Reference them with these **exact** tags:
 
-``` html
+```html
 <link rel="stylesheet" href="../plugin-ui.css">   <!-- in <head> -->
 <script src="../plugin-ui.js"></script>          <!-- before your own scripts -->
 <script src="script.js"></script>
@@ -56,7 +56,7 @@ The app ships two shared files in the parent `Plugins` folder. Reference them wi
 
 ## manifest.json
 
-``` json
+```json
 {
   "id": "acme-rss-headlines",
   "name": "RSS Headlines",
@@ -93,7 +93,7 @@ The example below is a complete working plugin. It shows a greeting and the curr
 
 ### script.js – shared drawing
 
-``` JavaScript
+```javascript
 const DEFAULT_CONFIG = {
     greeting: 'Hello!',
     textColor: '#FFFFFF',
@@ -131,7 +131,7 @@ function renderImage(config) {
 
 ### main.html – runtime page
 
-``` html
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -182,7 +182,7 @@ function renderImage(config) {
 
 ### config.html – settings page
 
-``` html
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -335,12 +335,12 @@ Firmware 3.0 and later draws a status toolbar over the **top 30 px** of the sc
 The glass has rounded corners. Design against a **40 px radius**. Full-bleed artwork is fine there, because it is only cropped. Text, progress bars, badges and icons near a corner get cut off on the device even though they look fine in the square preview.
 
 The risky case is a label anchored to a side margin on one of the top or bottom rows. A 12 px side margin is plenty mid-screen and almost nothing in a corner. On a row that is d pixels from the nearest horizontal edge (for d \< 40), the visible edge moves inwards by
-``` math
-\mathrm{inset}(d) = 40 - \sqrt{40^2 - (40 - d)^2}
-```
+
+*inset(d) = 40 − √(40² − (40 − d)²)*
+
 which is already about 14 px when d = 10. Either add that inset to the label’s margin or move the row further from the edge. The top corners also lose the toolbar strip, which makes them the tightest part of the screen.
 
-``` JavaScript
+```javascript
 function cornerInset(y, radius = 40, height = 280) {
     const d = Math.min(y, height - y);
     if (d >= radius) return 0;
@@ -359,7 +359,7 @@ function cornerInset(y, radius = 40, height = 280) {
 
 `setAnimation(frames, options)` turns a list of frames into an animated GIF on the host and shows it on the device.
 
-``` JavaScript
+```javascript
 const frames = [];
 const canvas = document.createElement('canvas');
 canvas.width = 240; canvas.height = 280;
@@ -387,7 +387,7 @@ The device accepts files of up to **1 MB**. The plugin animation path does *no
 
 ## LED patterns
 
-``` JavaScript
+```javascript
 window.addEventListener('busytag:patternsReceived', (e) => {
     const names = e.detail.map(p => p.name);
     if (names.includes('Police')) busyTagPlugin.playPattern('Police', true);
@@ -403,7 +403,7 @@ The set of patterns depends on the device and its firmware, so check that a patt
 
 Plugins can use `fetch()` directly for APIs that send CORS headers. For APIs that don’t (most server-to-server APIs), use the host HTTP bridge. It sends the request from the app process and returns the full response:
 
-``` JavaScript
+```javascript
 const res = await busyTagPlugin.http.request({
     url: 'https://api.example.com/v1/status',
     method: 'POST',                 // default GET
@@ -429,7 +429,7 @@ Use secure storage for tokens and API keys. It keeps them out of the config JSON
 In the current app version, values are stored in the app’s preferences under a hashed key and are only base64-encoded, **not encrypted**. Treat the store as “kept separately”, not “protected against other software on the machine”. The API will stay the same when platform encryption is added.
 :::
 
-``` JavaScript
+```javascript
 busyTagPlugin.secureStorage.setItem('apiKey', key);        // fire and forget
 const key = await busyTagPlugin.secureStorage.getItem('apiKey'); // null if missing
 busyTagPlugin.secureStorage.removeItem('apiKey');
@@ -441,7 +441,7 @@ busyTagPlugin.secureStorage.removeItem('apiKey');
 
 `busyTagPlugin.openUrl(url)` opens a URL for the user to interact with, typically for sign-in. Your OAuth provider should redirect to `busytag://redirect?code=…`. The host catches that redirect, closes the browser and fires `busytag:redirect` with the query parameters:
 
-``` JavaScript
+```javascript
 window.addEventListener('busytag:redirect', async (e) => {
     const { code, state, error } = e.detail;
     if (error || state !== expectedState) return;
@@ -457,7 +457,7 @@ Each platform opens the URL differently. Windows and macOS use an embedded panel
 
 A plugin can read files on the computer, but only paths that match a rule in its manifest’s `fileAccess`. Each rule is shown to the user in the install dialog. The bridge works on Windows and macOS only, so add `supportedPlatforms` to plugins that depend on it.
 
-``` json
+```json
 "supportedPlatforms": ["windows", "macos"],
 "fileAccess": [
   { "pattern": "~/.mytool/state.json",
@@ -491,7 +491,7 @@ Failed calls reject with an `Error` whose message starts with a code you can tes
 
 Plugins that declare `"systemAccess": ["nowPlaying"]` can ask the desktop which media is playing. On Windows the information comes from the system media controls; on macOS it comes from Apple Music.
 
-``` JavaScript
+```javascript
 const np = await busyTagPlugin.system.getNowPlaying({
     playerFilter: 'any',         // or 'apple'
     includeArt: true,

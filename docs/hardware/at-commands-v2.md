@@ -373,7 +373,7 @@ The serial port name varies by operating system: on Windows it is a COM port (e.
 
 ### Python
 
-``` python
+```python
 import serial
 
 ser = serial.Serial('COM3', 460800, timeout=1)
@@ -393,7 +393,7 @@ ser.close()
 
 ### C#
 
-``` [Sharp]C
+```csharp
 using System;
 using System.IO.Ports;
 
@@ -419,7 +419,7 @@ port.Close();
 
 Uses the `ORSSerialPort` library (macOS). Replies are delivered to the port’s delegate; only the writes are shown here.
 
-``` swift
+```swift
 import ORSSerial
 
 let port = ORSSerialPort(path: "/dev/tty.usbmodem1101")!

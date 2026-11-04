@@ -185,7 +185,7 @@ On success, each image is written to the application’s local data directory wi
 
 The Share-via-link flow uploads a bundle and yields an opaque token. The recipient opens a URL of the form:
 
-``` httpapi
+```http
 https://iot.busytag.com/d?v=1&t={token}
 ```
 
@@ -204,7 +204,7 @@ The Busy Tag mobile/desktop app uses three anonymous endpoints under <https://io
 
 Upload a `.busytagdesign` bundle. Multipart form-data, single field `bundle`.
 
-``` httpapi
+```http
 POST /api/v1/designs/share HTTP/1.1
 Content-Type: multipart/form-data; boundary=...
 
@@ -230,7 +230,7 @@ Content-Type: application/vnd.busytag.design
 
 Stream the previously-uploaded bundle.
 
-``` httpapi
+```http
 GET /api/v1/designs/shared/ab3kf9xq HTTP/1.1
 
 200 OK
@@ -247,7 +247,7 @@ Content-Disposition: attachment; filename="ab3kf9xq.busytagdesign"
 
 Revoke a previously-issued share. The caller proves ownership via the `X-Revoke-Token` header returned by the upload response. Token comparison uses `hash_equals` on the server.
 
-``` httpapi
+```http
 DELETE /api/v1/designs/shared/ab3kf9xq HTTP/1.1
 X-Revoke-Token: rk_8h2ng7vd...
 

@@ -26,7 +26,7 @@ Local network use cases
 ### When the server runs
 
 - **AP and STA+AP modes:** when the access point starts, the server starts on port `80` *without authentication*, because the setup app depends on it. (If the server was already running, it keeps its current settings.)
-- **STA-only mode:** switching to STA-only mode stops the server. Start it again with .
+- **STA-only mode:** switching to STA-only mode stops the server. Start it again with `AT+LS=1,<port>,<token>`.
 - **OFF:** the server is stopped.
 - The server listens on all interfaces. In STA+AP mode it is reachable both on the AP address (`192.168.4.1`) and on the address the router assigned to the device.
 - Server settings are kept in memory only. After a restart the server is configured again from the Wi-Fi mode, and settings made with `AT+LS` or `AT+LT` are lost.
@@ -38,7 +38,7 @@ In firmware 3.0 authentication is a single on/off setting for the whole server, 
 | **Server started by** | **Token** |
 |:---|:---|
 | Access point start (AP or STA+AP mode) | Not required, on any interface. In STA+AP mode this includes requests from the router network. |
-|  | Required on every interface: |
+| `AT+LS=1,<port>,<token>` | Required on every interface: `Authorization: Bearer <token>` |
 
 Authentication rules
 
@@ -76,7 +76,7 @@ When the access point starts, the display shows a QR code together with the SSID
     https://iot.busytag.com/s?v=1&id=<device_id>&ssid=<ssid>&pwd=<password>
         &n=<name>&fw=<fw>
 
-The Busy Tag app reads the SSID and password from this link and joins the network automatically. Users without the app can type the SSID and password shown on screen into the phone’s Wi-Fi settings. The base URL can be changed with ; `AT+QR=1` / `AT+QR=0` show and hide the code.
+The Busy Tag app reads the SSID and password from this link and joins the network automatically. Users without the app can type the SSID and password shown on screen into the phone’s Wi-Fi settings. The base URL can be changed with `AT+SDLU=<url>`; `AT+QR=1` / `AT+QR=0` show and hide the code.
 
 ### Step by step
 
@@ -139,11 +139,11 @@ The device joins an existing router as a normal client. Any PC, server or script
     +IP:192.168.1.42
     OK
 
-:
+`AT+LS=<enable>,<port>,<token>`:
 
 - `<enable>`: `1` starts the server, `0` stops it.
 - `<port>`: `1024`–`65535`. Port `80` cannot be selected with `AT+LS`; only the automatic start in AP and STA+AP modes uses it.
-- `<token>`: up to 63 characters, no commas. A non-empty token replaces the current one and turns authentication on. Leave it empty () to keep the current token and authentication setting. All three parameters are required.
+- `<token>`: up to 63 characters, no commas. A non-empty token replaces the current one and turns authentication on. Leave it empty (`AT+LS=1,8080,`) to keep the current token and authentication setting. All three parameters are required.
 
 `AT+LT?` returns the current token and `AT+LT` replaces it with a new random 32-character one, which takes effect for the next request. Neither is stored: after a restart, run `AT+LS` again.
 
@@ -183,7 +183,7 @@ When authentication is on (the server was started with a token through `AT+LS`),
 
     Authorization: Bearer <token>
 
-A missing or wrong token returns `401` with . When the server was started by the access point, no endpoint needs a token. All responses carry permissive CORS headers () and `OPTIONS` preflight is answered on every API path, so the API can be called from a browser page.
+A missing or wrong token returns `401` with `{"status":"error","message":"Authentication required"}`. When the server was started by the access point, no endpoint needs a token. All responses carry permissive CORS headers (`Access-Control-Allow-Origin: *`) and `OPTIONS` preflight is answered on every API path, so the API can be called from a browser page.
 
 ### Endpoints
 
@@ -193,8 +193,8 @@ A missing or wrong token returns `401` with . When the server was started by the
 | GET | `/favicon.ico` | Icon. Always open. |
 | POST | `/at` | Execute one AT command. |
 | GET | `/status` | Server and device status as JSON. |
-| POST |  | Upload a file to storage (raw body). |
-| GET |  | Download a file from storage. |
+| POST | `/file?name=<file>` | Upload a file to storage (raw body). |
+| GET | `/file?name=<file>` | Download a file from storage. |
 | POST | `/pattern` | Replace the custom LED pattern. |
 
 HTTP endpoints
@@ -215,7 +215,7 @@ Request body (JSON, at most 511 bytes; the command itself at most 255 characters
 
     {"command": "AT+GFL"}
 
-Response: `data` contains the exact text the command would have printed on USB, including `\r\n` line endings and the trailing `OK` or (up to 8 KB). The HTTP status is `200` whenever the command was dispatched; check `data` for `ERROR`.
+Response: `data` contains the exact text the command would have printed on USB, including `\r\n` line endings and the trailing `OK` or `ERROR:<code>` (up to 8 KB). The HTTP status is `200` whenever the command was dispatched; check `data` for `ERROR`.
 
     {
       "status": "success",
@@ -248,12 +248,12 @@ Interactive commands that expect a follow-up data stream on the serial port (USB
 
 ### POST /file?name=\<file\>
 
-The raw request body is written to , overwriting any existing file. The firmware frees space first if needed. On success `data` contains the file name. A partial upload is deleted.
+The raw request body is written to `/data/<file>`, overwriting any existing file. The firmware frees space first if needed. On success `data` contains the file name. A partial upload is deleted.
 
     curl -X POST "http://192.168.4.1/file?name=busy.png" \
       --data-binary @busy.png
 
-Then display it with .
+Then display it with `AT+SP=busy.png`.
 
 Use plain file names such as `busy.png`: no folders or path separators, no spaces and no `%`. The name is used exactly as sent (no URL decoding).
 
@@ -294,7 +294,7 @@ The server accepts up to 4 simultaneous connections; the least recently used con
 
 ### Python
 
-``` python
+```python
 import requests
 
 BASE  = "http://192.168.1.42:8080"
@@ -356,7 +356,7 @@ Note: a page served over `https://` cannot call the device’s `http://` address
 
 | **Symptom** | **Check** |
 |:---|:---|
-| Connection refused in STA mode | The server stops when the device switches to STA-only mode and after every restart. Run `AT+LS?`; start it with . |
+| Connection refused in STA mode | The server stops when the device switches to STA-only mode and after every restart. Run `AT+LS?`; start it with `AT+LS=1,8080,<token>`. |
 | `401` | Authentication is on: the token is missing, mistyped or was rotated with `AT+LT`. Read the current one with `AT+LT?` over USB. |
 | `AT+LS` returns `ERROR` | Give all three parameters; port `1024`–`65535`; token at most 63 characters. |
 | App cannot find the device in AP mode | The server was restarted with `AT+LS` on another port; the app expects `80`. Restart the device. |
@@ -372,16 +372,16 @@ Troubleshooting
 
 ## Command Quick Reference
 
-| **Command**       | **Purpose**                                       |
-|:------------------|:--------------------------------------------------|
-| , `AT+WM?`        | Wi-Fi mode: OFF / STA / AP / STA+AP (stored)      |
-| , `AT+STA?`       | Join a router / connection status                 |
-| `AT+GIP`          | Device IP on the router network                   |
-| , `AT+AP?`        | Configure / query the access point                |
-| `AT+APST?`        | Clients connected to the AP                       |
-|                   | Hide / show the setup QR code                     |
-|                   | Base URL of the setup deep link                   |
-| , `AT+LS?`        | Start / stop / query the HTTP server (not stored) |
-| `AT+LT?`, `AT+LT` | Read / rotate the bearer token (not stored)       |
+| **Command** | **Purpose** |
+|:---|:---|
+| `AT+WM=<0..3>`, `AT+WM?` | Wi-Fi mode: OFF / STA / AP / STA+AP (stored) |
+| `AT+STA=<ssid>,<pwd>`, `AT+STA?` | Join a router / connection status |
+| `AT+GIP` | Device IP on the router network |
+| `AT+AP=<ssid>,<pwd>[,...]`, `AT+AP?` | Configure / query the access point |
+| `AT+APST?` | Clients connected to the AP |
+| `AT+QR=<0\|1>` | Hide / show the setup QR code |
+| `AT+SDLU=<url>` | Base URL of the setup deep link |
+| `AT+LS=<en>,<port>,<token>`, `AT+LS?` | Start / stop / query the HTTP server (not stored) |
+| `AT+LT?`, `AT+LT` | Read / rotate the bearer token (not stored) |
 
 Commands relevant to local network use

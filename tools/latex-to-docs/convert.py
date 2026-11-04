@@ -338,6 +338,20 @@ def convert(job):
         nb.append(body[cur:a]); nb.append('\n\nFIGPLACEHOLDER%d\n\n' % k); cur = e
     nb.append(body[cur:]); body = ''.join(nb)
 
+    # ---- verbatim macros (\newcommand{\cmd}[1]{\texttt{\detokenize{#1}}}): pandoc expands
+    # \detokenize to nothing, so turn each use into \texttt with the argument escaped.
+    VERB_ESC = {'\\': r'\textbackslash{}', '{': r'\{', '}': r'\}', '_': r'\_', '#': r'\#', '%': r'\%',
+                '&': r'\&', '$': r'\$', '~': r'\textasciitilde{}', '^': r'\textasciicircum{}'}
+    for n, (k, a, b, full) in defs.items():
+        if a != 1 or '\\detokenize' not in b: continue
+        pat = re.compile(r'\\%s(?![A-Za-z])\s*\{' % re.escape(n)); parts = []; pos = 0
+        for mm in pat.finditer(body):
+            if mm.start() < pos: continue
+            e = group(body, mm.end() - 1)
+            arg = ''.join(VERB_ESC.get(ch, ch) for ch in body[mm.end():e-1])
+            parts.append(body[pos:mm.start()]); parts.append('\\texttt{%s}' % arg); pos = e
+        parts.append(body[pos:]); body = ''.join(parts)
+
     # ---- admonitions
     def admon(mm):
         # A box title ([Title]) is carried hex-encoded so pandoc leaves it alone.
@@ -437,6 +451,33 @@ def convert(job):
         if md2 == md: break
         md = md2
     md = md.replace('``` lstlisting', '```').replace('``` text', '```text')
+    # code fence languages: listings names -> Prism names ("``` [Sharp]C" -> "```csharp")
+    LANGS = {'[sharp]c': 'csharp', 'c#': 'csharp', 'javascript': 'javascript', 'python': 'python',
+             'swift': 'swift', 'html': 'html', 'json': 'json', 'bash': 'bash', 'sh': 'bash',
+             'httpapi': 'http', 'xml': 'xml', 'powershell': 'powershell'}
+    md = re.sub(r'^```[ \t]+(\S+)[ \t]*$', lambda m: '```' + LANGS.get(m.group(1).lower(), m.group(1).lower()),
+                md, flags=re.M)
+
+    # display math: the site has no KaTeX, so write simple formulas in Unicode
+    def unimath(m):
+        t = m.group(1).strip()
+        for _ in range(3):
+            t = re.sub(r'\\(?:mathrm|text|mathit)\{([^{}]*)\}', r'\1', t)
+            t = re.sub(r'\\sqrt\{([^{}]*)\}', r'√(\1)', t)
+            t = re.sub(r'\\frac\{([^{}]*)\}\{([^{}]*)\}', r'(\1)/(\2)', t)
+        t = re.sub(r'\^\{?2\}?', '²', t)
+        t = re.sub(r'\^\{?3\}?', '³', t)
+        t = t.replace('\\cdot', '·').replace('\\times', '×').replace(' - ', ' − ')
+        if '\\' in t:
+            print('   !! math left as LaTeX:', t)
+        return '\n*%s*\n' % t if '\\' not in t else m.group(0)
+    md = re.sub(r'^```math\n(.*?)\n```$', unimath, md, flags=re.M | re.S)
+
+    # GFM tables: a '|' inside a code span still splits the cell, so escape it
+    def pipes(line):
+        if not line.startswith('|'): return line
+        return re.sub(r'`[^`\n]*`', lambda m: re.sub(r'(?<!\\)\|', r'\\|', m.group(0)), line)
+    md = '\n'.join(pipes(l) for l in md.split('\n'))
 
     fm = ['---', 'title: "%s"' % title.replace('"', '\\"')]
     if kind == 'plugin':
