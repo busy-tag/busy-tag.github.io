@@ -2,7 +2,7 @@
 
 Usage: python convert.py <docs_src_dir> <site_dir> [--hw FIRMWARE_DOCS_DIR] [--only NAME] [--no-figs] [--include-dev]
 
---hw points at the docs/ folder of the firmware repo (busytag-wifi-version); its manuals listed in
+--hw points at the docs/ folder of the firmware sources; its manuals listed in
 HW_DOCS are published under /hardware.
 
 Plugin guides are published only for plugins that regular users can see. A plugin whose

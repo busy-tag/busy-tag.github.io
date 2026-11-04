@@ -24,7 +24,7 @@ docs/
                             downloads.mdx renders src/data/app-archive.json; after a release run
                             python tools/app-archive.py --latest <version>  (only released versions)
   about/                    Accessibility, privacy & legal    (hand-written)
-                            vpat.md generated: python tools/vpat-to-docs.py <app>/docs/vpat .
+                            vpat.md generated: python tools/vpat-to-docs.py <vpat-dir> .
   plugins/                  Plugin user guides  -> /plugins/<name>
   developers/               Developer guides (generated) + tools.md, examples.md (hand-written)
   hardware/                 Specs (hand-written), AT command manuals, local network guide
@@ -41,10 +41,9 @@ escaping. Use `.mdx` only when a page needs React components. Admonitions (`:::t
 
 ## Regenerating from the LaTeX sources
 
-The plugin guides, the Plugin Development Guide and the design-format spec are written in LaTeX
-in the app repo (`busytag-maui-app/docs`). The hardware manuals are LaTeX in the firmware repo
-(`busytag-wifi-version/docs`, private). `tools/latex-to-docs/convert.py` turns them into the
-Markdown pages here:
+The plugin guides, the Plugin Development Guide, the design-format spec and the hardware manuals
+are written in LaTeX in separate source repositories. `tools/latex-to-docs/convert.py` turns them
+into the Markdown pages here:
 
 - Text goes through pandoc. Tip/note/warning boxes become admonitions, and section references
   become links.
@@ -57,10 +56,10 @@ Requirements: Python 3.10+, a TeX distribution (MiKTeX/TeX Live) with the packag
 ```bash
 python -m venv .venv
 .venv/Scripts/pip install -r tools/latex-to-docs/requirements.txt   # bin/ on macOS/Linux
-.venv/Scripts/python tools/latex-to-docs/convert.py ../../RiderProjects/busytag-maui-app/docs .
-.venv/Scripts/python tools/latex-to-docs/convert.py ../../RiderProjects/busytag-maui-app/docs . --only AnalogClock
+.venv/Scripts/python tools/latex-to-docs/convert.py <app-docs-dir> .
+.venv/Scripts/python tools/latex-to-docs/convert.py <app-docs-dir> . --only AnalogClock
 # hardware manuals (only released firmware; the list is HW_DOCS in convert.py)
-.venv/Scripts/python tools/latex-to-docs/convert.py ../../RiderProjects/busytag-maui-app/docs .     --hw ../../Documents/c_projects/esp32/busytag-wifi-version/docs --only AtCommands
+.venv/Scripts/python tools/latex-to-docs/convert.py <app-docs-dir> . --hw <firmware-docs-dir> --only AtCommands
 ```
 
 The converter overwrites the generated pages, so make lasting text changes in the `.tex` sources,
