@@ -18,9 +18,13 @@ npm run serve      # serve the production build locally
 ```
 docs/
   index.md                  Landing page (served at /)
+  getting-started/          Install, connect, app tour        (hand-written)
+  troubleshooting.md        Troubleshooting & FAQ             (hand-written)
+  updates/                  Firmware updates, app release notes (hand-written)
+  about/                    Accessibility, privacy & legal    (hand-written)
   plugins/                  Plugin user guides  -> /plugins/<name>
-  developers/               Developer guides    -> /developers/<name>
-  hardware/                 AT command manuals -> /hardware/<name>
+  developers/               Developer guides (generated) + tools.md, examples.md (hand-written)
+  hardware/                 Specs (hand-written), AT command manuals, local network guide
   */img/                    Figures (SVG) referenced by the guides
   */_category_.json         Sidebar label, order and index page per section
 static/pdf/                 PDF versions linked from each guide
