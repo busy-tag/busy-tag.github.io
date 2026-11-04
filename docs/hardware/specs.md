@@ -11,9 +11,9 @@ description: Size, screen, LEDs, connectivity and power of the Busy Tag device.
 |:--|:--|
 | Screen | Colour LCD, 240 × 280 pixels; shows PNG and animated GIF images |
 | LEDs | RGB LED bar with 7 individually addressable LEDs, solid colours and animated patterns |
-| Processor | Espressif ESP32-S3, dual-core 240 MHz |
+| Processor | Espressif ESP32-S3, dual-core 240 MHz: ESP32-S3-MINI module (hardware 1.0) or ESP32-S3-WROOM module (hardware 2.0) |
 | Storage | Internal flash with a FAT file system for images and settings; GIFs up to 1 MB |
-| Connection | USB-C (USB serial / CDC). Wi-Fi models: also Wi-Fi 802.11 b/g/n, 2.4 GHz |
+| Connection | USB-C (USB serial / CDC). Hardware 2.0: also Wi-Fi 802.11 b/g/n, 2.4 GHz |
 | Power | 5 V over USB-C from a computer, charger, hub or power bank. No battery |
 | Size and weight | 36 × 46 × 8 mm, 20 g |
 | Mounting | Double-sided magnets included |
@@ -22,11 +22,13 @@ description: Size, screen, LEDs, connectivity and power of the Busy Tag device.
 
 ## Models
 
-Busy Tag exists with and without Wi-Fi. Both have the same screen and LEDs; the firmware tells
-them apart.
+Busy Tag exists in two hardware versions. Both have the same screen and LEDs; they differ in the
+ESP32-S3 module and in what the firmware does with it.
 
-| | Without Wi-Fi | With Wi-Fi (hardware 2.0) |
+| | Hardware 1.0 | Hardware 2.0 |
 |:--|:--|:--|
+| Module | ESP32-S3-MINI | ESP32-S3-WROOM |
+| Wi-Fi | Not used by the firmware | Yes, 2.4 GHz |
 | Firmware | 2.x | 3.x |
 | Controlled from | Desktop app over USB | Desktop app over USB, phone app over Wi-Fi |
 | Phone app | Only while plugged into a computer running the app | Directly, through the Busy Tag cloud |
@@ -34,7 +36,8 @@ them apart.
 | Command reference | [AT commands 2.x](/hardware/at-commands-v2) | [AT commands 3.x](/hardware/at-commands) |
 
 To see which one you have, open the device's settings in the app: the firmware version is shown
-under **Device firmware**, and Wi-Fi models have a **Wi-Fi** section.
+under **Device firmware** (2.x on hardware 1.0, 3.x on hardware 2.0), and hardware 2.0 devices
+have a **Wi-Fi** section. Over USB, `AT+GHV` returns the hardware version.
 
 ## USB identification
 

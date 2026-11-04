@@ -11,8 +11,8 @@ so keep it current. Updates are installed by the Busy Tag app on **Windows or ma
 
 | Firmware | Devices | What it adds |
 |:--|:--|:--|
-| 2.x | Busy Tag models without Wi-Fi | Screen, LEDs, file storage and the USB [AT command set](/hardware/at-commands-v2). |
-| 3.x | Busy Tag models with Wi-Fi (hardware 2.0) | Everything in 2.x plus Wi-Fi, cloud control from the phone app, device sharing without a computer, the on-screen setup QR code, the status toolbar and the [local network API](/hardware/local-network). See the [3.x command manual](/hardware/at-commands). |
+| 2.x | Hardware 1.0 (ESP32-S3-MINI), no Wi-Fi | Screen, LEDs, file storage and the USB [AT command set](/hardware/at-commands-v2). |
+| 3.x | Hardware 2.0 (ESP32-S3-WROOM), with Wi-Fi | Everything in 2.x plus Wi-Fi, cloud control from the phone app, device sharing without a computer, the on-screen setup QR code, the status toolbar and the [local network API](/hardware/local-network). See the [3.x command manual](/hardware/at-commands). |
 
 A device cannot move between these lines: each one matches its hardware.
 
