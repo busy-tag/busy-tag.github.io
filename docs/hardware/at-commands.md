@@ -203,7 +203,6 @@ Built-in pattern commands
 |   10   | Red Running     |   23   | White Pulses    |
 |   11   | Green Running   |   24   | Rainbow         |
 |   12   | Blue Running    |        |                 |
-|        |                 |        |                 |
 
 Built-in pattern IDs
 
@@ -626,7 +625,6 @@ System and reset commands
 |    21    | USB UART reset                      |
 |    22    | USB JTAG reset                      |
 |    23    | Power-glitch reset                  |
-|          |                                     |
 
 Reset reason codes (`AT+GLRR0` / `AT+GLRR1`)
 
@@ -651,7 +649,6 @@ The device emits unsolicited `+evn:` lines on the serial port. They can arrive a
 | `+evn:FWDL,DOWNLOADED` | Firmware image downloaded, update will run |
 | `+evn:FWDL,FAILED` | Firmware download or update failed |
 | `+evn:FU,<percent>%` | Firmware update flash progress |
-|  |  |
 
 Asynchronous events
 
@@ -678,7 +675,6 @@ On failure the device responds with `ERROR:<code>`. The last error is also retri
 |    11    | Sensor error            |
 |    12    | File delete error       |
 |    13    | File reception timeout  |
-|          |                         |
 
 Error codes
 
@@ -753,7 +749,6 @@ Codes 9 (Wi-Fi scan error) and 10 (token error) are new in 3.0; the sensor, file
 | `AT+RST`      | Action   | Restart                                 |
 | `AT+FD`       | Action   | Format disk                             |
 | `AT+FR`       | Action   | Factory reset                           |
-|               |          |                                         |
 
 Complete AT command reference
 

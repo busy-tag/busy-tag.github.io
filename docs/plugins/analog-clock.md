@@ -39,13 +39,18 @@ The clock uses the time of the computer or phone that runs the Busy Tag app. Mak
 
 The configuration page opens automatically after you add the plugin. To open it again later, click the **More Options** button (**…**) next to the plugin in **My Integrations** and choose **Configure**.
 
+**Clock face**
+
 | **Setting** | **Default** | **Description** |
 |:---|:---|:---|
-| *Clock face* |  |  |
 | Background | `#000000` | The screen and clock face background. |
 | Outline | `#FFFFFF` | The circle, the hour marks, the numbers and the centre dot. |
 | Hands | `#FFFFFF` | The hour hand and the minute hand. |
-| *LED* |  |  |
+
+**LED**
+
+| **Setting** | **Default** | **Description** |
+|:---|:---|:---|
 | LED | `#7D2BC4` | The colour of the Busy Tag LED while the clock is shown. |
 
 A preview next to the form shows how the clock will look. Click **Save** to apply your changes. If the clock is already showing on your Busy Tag, it switches to the new colours straight away.

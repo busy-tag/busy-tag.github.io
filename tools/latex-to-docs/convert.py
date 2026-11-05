@@ -479,6 +479,36 @@ def convert(job):
         return re.sub(r'`[^`\n]*`', lambda m: re.sub(r'(?<!\\)\|', r'\\|', m.group(0)), line)
     md = '\n'.join(pipes(l) for l in md.split('\n'))
 
+    # GFM tables have no colspan: a \multicolumn group row ("| *Clock face* |  |  |") becomes a
+    # bold label above its own table (same header), and all-empty rows (longtable ends) are dropped.
+    def cells(line):
+        return [c.strip() for c in re.split(r'(?<!\\)\|', line.strip())[1:-1]]
+    def tables(text):
+        out, block = [], []
+        for line in text.split('\n') + ['']:
+            if line.startswith('|'):
+                block.append(line); continue
+            if block:
+                out.extend(fix_table(block)); block = []
+            out.append(line)
+        return '\n'.join(out[:-1])
+    def fix_table(block):
+        if len(block) < 2 or not re.match(r'^\|[\s:|-]+\|$', block[1].strip()): return block
+        head, res, open_ = block[:2], [], True
+        res.extend(head)
+        for row in block[2:]:
+            c = cells(row)
+            if not any(c): continue
+            if len(c) > 1 and c[0] and not any(c[1:]):
+                label = re.sub(r'^\*+|\*+$', '', c[0])
+                if res[-1] == head[1]: res = res[:-2]   # nothing under the header yet
+                else: res.append('')
+                res.extend(['**%s**' % label, ''] + head)
+                continue
+            res.append(row)
+        return res
+    md = tables(md)
+
     fm = ['---', 'title: "%s"' % title.replace('"', '\\"')]
     if kind == 'plugin':
         fm.append('sidebar_label: "%s"' % re.sub(r'\s+Plugin$', '', title))

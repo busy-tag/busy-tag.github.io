@@ -292,7 +292,6 @@ System and reset commands
 |    21    | USB UART reset                      |
 |    22    | USB JTAG reset                      |
 |    23    | Power-glitch reset                  |
-|          |                                     |
 
 Reset reason codes (`AT+GLRR0` / `AT+GLRR1`)
 
@@ -323,7 +322,6 @@ On failure the device responds with `ERROR:<code>`. The last error is also retri
 |    11    | Sensor error            |
 |    12    | File delete error       |
 |    13    | File reception timeout  |
-|          |                         |
 
 Error codes
 
@@ -361,7 +359,6 @@ Error codes
 | `AT+AFSS`   | Action   | Re-scan storage                |
 | `AT+RST`    | Action   | Restart                        |
 | `AT+FD`     | Action   | Format disk                    |
-|             |          |                                |
 
 Complete AT command reference
 

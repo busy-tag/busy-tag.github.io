@@ -43,16 +43,25 @@ You can add the plugin more than once, for example one copy saying “ON AIR” 
 
 The configuration page opens automatically after you add the plugin. To open it again later, click the **More Options** button (**…**) next to the plugin in **My Integrations** and choose **Configure**.
 
+**Text**
+
 | **Setting** | **Default** | **Description** |
 |:---|:---|:---|
-| *Text* |  |  |
 | Message | ON AIR | The text to scroll. Up to **20 characters**. |
 | Font | Arial | Arial, Times New Roman, Verdana, Georgia, Courier New, Tahoma, Impact or Comic Sans MS. |
-| *Motion* |  |  |
+
+**Motion**
+
+| **Setting** | **Default** | **Description** |
+|:---|:---|:---|
 | Font size | 144 px | From 24 to 216 pixels. Text that would be too tall for the screen is made smaller automatically (see [How the Text Is Shown](#how-the-text-is-shown)). |
 | Speed | 3 | From 1 (slowest) to 5 (fastest). |
 | Glow effect | On | Draws a soft halo around the letters in the glow colour. |
-| *Colors* |  |  |
+
+**Colors**
+
+| **Setting** | **Default** | **Description** |
+|:---|:---|:---|
 | Background | `#000000` | The screen colour behind the text. |
 | Text | `#FF0000` | The colour of the letters. |
 | Glow | `#FF0000` | The colour of the halo, when glow is on. |

@@ -7,7 +7,7 @@ description: Size, screen, LEDs, connectivity and power of the Busy Tag device.
 
 ## At a glance
 
-| | |
+| Feature | Details |
 |:--|:--|
 | Screen | Colour LCD, 240 × 280 pixels; shows PNG and animated GIF images |
 | LEDs | RGB LED bar with 7 individually addressable LEDs, solid colours and animated patterns |
