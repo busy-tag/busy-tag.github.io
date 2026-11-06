@@ -42,10 +42,13 @@
 }
 
 /* App screenshots in the getting-started guides: phone-sized, centred, with a frame. */
+/* Desktop app screenshots (getting-started/img/app-*.webp) */
 .markdown img[src*='app-'] {
   display: block;
-  max-width: 260px;
-  margin: 1rem auto;
-  border-radius: 18px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+  width: 100%;
+  max-width: 900px;
+  margin: 1.25rem auto;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 10px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.16);
 }
