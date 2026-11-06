@@ -26,7 +26,7 @@ There are two models: the original **Busy Tag** (hardware 1.0) and **Busy Tag 2*
 2.0). They have the same size, screen and LEDs; they differ in the ESP32-S3 module and in what the
 firmware does with it.
 
-| | Busy Tag (hardware 1.0) | Busy Tag 2 (hardware 2.0) |
+| Feature | Busy Tag (hardware 1.0) | Busy Tag 2 (hardware 2.0) |
 |:--|:--|:--|
 | Module | ESP32-S3-MINI | ESP32-S3-WROOM |
 | Wi-Fi | Not used by the firmware | Yes, 2.4 GHz |
