@@ -1,40 +1,73 @@
 ---
 title: Example projects
 sidebar_position: 4
-description: Open-source example scripts and widgets that drive Busy Tag from Python.
+description: Open-source Python examples that drive Busy Tag over USB and, on Busy Tag 2, over Wi-Fi.
 ---
 
-The [busy-tag GitHub organisation](https://github.com/busy-tag) has small open-source projects
-that show Busy Tag in action. They are written in Python and talk to the device over USB, so they
-make good starting points for your own ideas.
+[busytag-python-examples](https://github.com/busy-tag/busytag-python-examples) is a collection of
+small open-source Python projects that show Busy Tag in action. They make good starting points
+for your own ideas. They work with the current firmware:
 
-:::note
-These examples were written in 2024 for earlier firmware. They may need small changes for the
-current firmware; check the [AT Command Manual](/hardware/at-commands) when something does not
-work. For new work, a [plugin](/developers/plugin-development) or the
-[library and CLI](/developers/tools) are usually the easier route.
+| Device | Firmware | Connection |
+|:--|:--|:--|
+| Busy Tag (hardware 1.0) | 2.x | USB |
+| Busy Tag 2 (hardware 2.0) | 3.x | USB, Wi-Fi ([local HTTP API](/hardware/local-network)) |
+
+All examples use one small helper, `busytag.py`, which finds the device, sends
+[AT commands](/hardware/at-commands) and uploads pictures. Firmware 2.x and 3.x no longer show up
+as a USB drive, so pictures are uploaded with `AT+UF` instead of being copied to a drive.
+
+```python
+from busytag import BusyTag, text_image
+
+with BusyTag.connect() as tag:          # finds Busy Tag on USB
+    tag.set_color("FF0000")             # all LEDs red
+    tag.show_image(text_image("Busy"))  # draw text, upload it and show it
+```
+
+:::tip[Before you start]
+Close the Busy Tag app while an example runs: only one program can use the serial port at a
+time. The [README](https://github.com/busy-tag/busytag-python-examples#getting-started) lists
+the setup steps.
 :::
 
 ## Learning course
 
-- [Learning-Course](https://github.com/busy-tag/Learning-Course): step-by-step scripts for LED
-  colours, patterns, text on the screen, and system uptime and usage displays.
+Seven short lessons, from switching on one LED to live system data.
+
+| Lesson | What it does |
+|:--|:--|
+| 1. LED control | Switch on single LEDs with the LED mask |
+| 2. LED colour control | LED colours picked from a picture |
+| 3. LED pattern control | Build and play a custom LED pattern |
+| 4. Text to image | Show your text on the screen |
+| 5. LED to ASCII | Draw the current LED state on the screen |
+| 6. System uptime | How long the computer has been running |
+| 7. System usage | CPU, RAM and GPU load, with the LEDs as a load meter |
 
 ## Widgets
 
-| Project | What it shows |
-|:--|:--|
-| [Google Calendar Widget](https://github.com/busy-tag/Google_Calendar_Widget) | Current and upcoming Google Calendar events |
-| [Outlook Calendar Widget](https://github.com/busy-tag/Outlook_Calendar_Widget) | Current and upcoming Outlook events (Microsoft Graph) |
-| [Spotify Widget](https://github.com/busy-tag/Busy_Tag_Spotify_Widget) | The track playing on Spotify, with album art |
-| [Pomodoro Timer](https://github.com/busy-tag/Pomodoro_timer) | Work and break countdowns |
-| [Crypto Tracker](https://github.com/busy-tag/Crypto_tracker) | Live cryptocurrency prices |
-| [YouTube Subscriber Tracker](https://github.com/busy-tag/Youtube_Subscriber_Tracker) | A channel's subscriber count, with LED effects |
-| [Air Temperature](https://github.com/busy-tag/Air_temperature) | Current temperature at your location |
-| [Moon Phases](https://github.com/busy-tag/Moon_phases) | The moon phase for a chosen date |
-| [Internet Speed Test](https://github.com/busy-tag/Internet_speed_test) | Download and upload speed results |
-| [Mouse Click Counter](https://github.com/busy-tag/Mouse_Click_Counter) | A live count of mouse clicks |
-| [Dice Roller](https://github.com/busy-tag/Dice_roller) | A virtual dice roll |
+| Widget | What it shows | Needs |
+|:--|:--|:--|
+| Air temperature | Current temperature where you are | – |
+| Crypto tracker | Price of a crypto pair, LEDs show the trend | – |
+| Moon phase | The moon phase for a date | – |
+| Internet speed test | Download and upload speed | – |
+| Mouse click counter | A live count of mouse clicks | – |
+| Dice roller | A die you roll from a small window | – |
+| Pomodoro timer | Work and break countdowns | – |
+| YouTube subscribers | A channel's subscriber count | YouTube Data API key |
+| Google Calendar | Current and next event, LEDs show busy / soon / free | Google OAuth client |
+| Outlook calendar | Current and next event, LEDs show busy / soon / free | Microsoft Entra app registration |
+| Spotify now playing | Album art and the track playing | Spotify app client ID |
+
+## Wi-Fi (Busy Tag 2)
+
+**Status light** sets up the local HTTP server once over USB, then switches the device between
+Busy, Free and Away from any computer on the same network, without a cable.
+
+---
 
 Several of these ideas are also built into the app as [integrations](/plugins), with no code
-needed.
+needed. To add your own to the app, write a [plugin](/developers/plugin-development); for .NET
+projects see the [library and CLI](/developers/tools).
